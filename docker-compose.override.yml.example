@@ -1,0 +1,10 @@
+# Für die Nutzung auf spielwiese.me
+
+services:
+    dns-proxy:
+        deploy:
+            replicas: 0
+
+    web:
+        ports:
+            - '8080:80'

@@ -1,0 +1,23 @@
+services:
+    dns-proxy:
+        hostname: spielwiese.test
+        image: defreitas/dns-proxy-server:latest
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /etc/resolv.conf:/etc/resolv.conf
+        ports:
+            - '80:80'
+
+    web:
+        hostname: spielwiese.test
+        image: nginx:latest
+        volumes:
+            - ./:/var/www/html
+            - ./docker/web/default.conf:/etc/nginx/conf.d/default.conf
+        links:
+            - php-fpm
+
+    php-fpm:
+        image: php:8.3-fpm
+        volumes:
+            - ./:/var/www/html
