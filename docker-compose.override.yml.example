@@ -5,6 +5,16 @@ services:
         deploy:
             replicas: 0
 
-    web:
+    web: !override
         ports:
             - '8080:80'
+        build:
+            context: .
+            dockerfile: docker/web/Dockerfile
+        links:
+            - php-fpm
+
+    php-fpm: !override
+        build:
+            context: .
+            dockerfile: docker/php-fpm/Dockerfile
